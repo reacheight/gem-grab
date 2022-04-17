@@ -23,6 +23,7 @@ end
 function CAddonTemplateGameMode:InitGameMode()
 	print( "Template addon is loaded." )
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
+	GameRules:GetGameModeEntity():SetThink(SpawnGem, self, "GemSpawn", 5)
 end
 
 -- Evaluate the state of the game
@@ -33,4 +34,11 @@ function CAddonTemplateGameMode:OnThink()
 		return nil
 	end
 	return 1
+end
+
+function SpawnGem()
+	print("Spawn Gem!")
+	local gem = CreateItem("item_gem", nil, nil)
+	CreateItemOnPositionSync(Vector(16, 16, 0), gem)
+	return 5
 end

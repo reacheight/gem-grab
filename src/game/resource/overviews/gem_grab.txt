@@ -1,0 +1,8 @@
+gem_grab
+{
+	material materials/overviews/gem_grab.vmat
+	pos_x -1992
+	pos_y 1920
+	scale 4.000
+}
+
