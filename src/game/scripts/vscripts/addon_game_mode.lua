@@ -22,23 +22,21 @@ end
 
 function CAddonTemplateGameMode:InitGameMode()
 	print( "Template addon is loaded." )
-	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
-	GameRules:GetGameModeEntity():SetThink(SpawnGem, self, "GemSpawn", 5)
+	GameRules:SetPreGameTime(0)
+	GameRules:GetGameModeEntity():SetThink( "SpawnGem", self, "GemSpawnThink", 2 )
 end
 
 -- Evaluate the state of the game
-function CAddonTemplateGameMode:OnThink()
+function CAddonTemplateGameMode:SpawnGem()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		--print( "Template addon script is running." )
+		print("Spawn Gem!")
+		local gem = CreateItem("item_gem", nil, nil)
+		CreateItemOnPositionSync(Vector(16, 16, 0), gem)
+		return 5
+
 	elseif GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
 		return nil
 	end
-	return 1
-end
 
-function SpawnGem()
-	print("Spawn Gem!")
-	local gem = CreateItem("item_gem", nil, nil)
-	CreateItemOnPositionSync(Vector(16, 16, 0), gem)
-	return 5
+	return 1
 end
