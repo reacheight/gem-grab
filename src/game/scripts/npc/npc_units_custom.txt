@@ -89,4 +89,29 @@
 			"XPGain"					"15"
 		}
 	}
+
+	"npc_dota_gem_spawner"
+	{
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/props_gameplay/teleport001.vmdl"	// Model.
+		"BaseClass"				"npc_dota_building"
+		"SoundSet"				"0"			// Name of sound set.
+		"Level"						"1"
+		"ModelScale"			"1"
+
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"							// Team name.
+	}
 }
