@@ -25,6 +25,8 @@ function GemGrab:Init()
   GemGrab.RadiantScore = 0
   GemGrab.DireScore = 0
 
+  GameRules:SetCustomGameTeamMaxPlayers(2, 3)
+  GameRules:SetCustomGameTeamMaxPlayers(3, 3)
   GameRules:SetPreGameTime(0)
   GameRules:SetStrategyTime(0)
   GameRules:SetShowcaseTime(0)
