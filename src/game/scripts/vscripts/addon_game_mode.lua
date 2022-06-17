@@ -52,23 +52,24 @@ function GemGrab:OnGameStateChanged()
 end
 
 function GemGrab:OnItemPickedUp(event)
-  local item = EntIndexToHScript(event.ItemEntityIndex)
-  local hero = item:GetParent()
-  local team = hero:GetTeam()
-
   if event.itemname == "item_gem" then
-    if (team == 2) then
-      GemGrab.RadiantScore = GemGrab.RadiantScore + 1
+    local item = EntIndexToHScript(event.ItemEntityIndex)
+    local player = PlayerResource:GetPlayer(event.PlayerID)
+    local team = player:GetTeam()
+    local charges = item:GetCurrentCharges()
 
-      if GemGrab.RadiantScore == 10 then
+    if (team == 2) then
+      GemGrab.RadiantScore = GemGrab.RadiantScore + charges
+
+      if GemGrab.RadiantScore >= 10 then
         GameRules:SetGameWinner(2)
       end
     end
 
     if (team == 3) then
-      GemGrab.DireScore = GemGrab.DireScore + 1
+      GemGrab.DireScore = GemGrab.DireScore + charges
 
-      if GemGrab.DireScore == 10 then
+      if GemGrab.DireScore >= 10 then
         GameRules:SetGameWinner(3)
       end
     end
@@ -81,13 +82,14 @@ function GemGrab:OnItemDropped(event)
     if item:GetName() == "item_gem" then
       local hero = EntIndexToHScript(event.hero_entindex)
       local team = hero:GetTeam()
+      local charges = item:GetCurrentCharges()
 
       if (team == 2) then
-        GemGrab.RadiantScore = GemGrab.RadiantScore - 1
+        GemGrab.RadiantScore = GemGrab.RadiantScore - charges
       end
 
       if (team == 3) then
-        GemGrab.DireScore = GemGrab.DireScore - 1
+        GemGrab.DireScore = GemGrab.DireScore - charges
       end
     end
   end
@@ -95,6 +97,7 @@ end
 
 function SpawnGem()
   local gem = CreateItem("item_gem", nil, nil)
+  gem:SetActivated(false)
   local gem_spawner_position = Entities:FindByName(nil, "gem_spawner"):GetAbsOrigin()
   local spawn_position = RandomVector(RandomFloat(100, 300)) + gem_spawner_position
   CreateItemOnPositionSync(spawn_position, gem)
