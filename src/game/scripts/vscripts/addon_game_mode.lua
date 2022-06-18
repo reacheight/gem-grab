@@ -100,6 +100,10 @@ function CheckWin()
   local newWinner = GemGrab:CalculateWinner()
   
   if newWinner == nil then
+    if GemGrab.CurrentWinner ~= nil then
+      CustomGameEventManager:Send_ServerToAllClients("countdown_updated", { countdown = "" })
+    end
+
     GemGrab.CurrentWinner = nil
     return 1
   end
@@ -107,9 +111,12 @@ function CheckWin()
   if GemGrab.CurrentWinner ~= newWinner then
     GemGrab.CurrentWinner = newWinner
     GemGrab.WinTime = GameRules:GetGameTime() + WIN_COUNTDOWN
+    CustomGameEventManager:Send_ServerToAllClients("countdown_updated", { countdown = 15 })
     return 1
   end
 
+  local countdown = math.floor(GemGrab.WinTime - GameRules:GetGameTime() + 0.5)
+  CustomGameEventManager:Send_ServerToAllClients("countdown_updated", { countdown = countdown })
   if GameRules:GetGameTime() >= GemGrab.WinTime then
     GameRules:SetGameWinner(newWinner)
     return nil

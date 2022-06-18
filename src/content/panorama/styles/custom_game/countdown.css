@@ -1,0 +1,10 @@
+.Countdown {
+  margin-top: 100px;
+  color: white;
+  font-size: 40px;
+  horizontal-align: center;
+}
+
+.CountdownText {
+  text-shadow: 2px 2px 8px 3.0 #333333b0;
+}

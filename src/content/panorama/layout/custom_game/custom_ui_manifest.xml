@@ -42,6 +42,7 @@
   <Panel>
     <!-- CustomUIElements go here.-->
     <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/score.xml"/>
+    <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/countdown.xml"/>
 
     <!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
     <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" /> 
