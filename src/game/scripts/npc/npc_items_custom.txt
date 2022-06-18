@@ -8,5 +8,6 @@
     "ItemPurchasable" "0"
     "VisionDaytimeRange" "0"
     "VisionNighttimeRange" "0"
+    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
   }
 }
