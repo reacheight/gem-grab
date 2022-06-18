@@ -1,0 +1,14 @@
+.Score {
+  margin-top: 50px;
+  color: white;
+}
+
+.RadiantScore {
+  font-size: 40px;
+  margin-left: 880px;
+}
+
+.DireScore {
+  font-size: 40px;
+  margin-left: 1020px;
+}

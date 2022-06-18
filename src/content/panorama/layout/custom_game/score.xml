@@ -1,0 +1,20 @@
+<root>
+  <scripts>
+		<include src="file://{resources}/scripts/custom_game/score.js"/>
+	</scripts>
+
+  <styles>
+		<include src="file://{resources}/styles/custom_game/score.css"/>
+	</styles>
+  
+
+  <Panel id="Score" class="Score">
+    <Panel id="Team2" class="RadiantScore">
+      <Label id="Label2" text = "0"/>
+    </Panel>
+
+    <Panel id="Team3" class="DireScore">
+      <Label id="Label3" text = "0"/>
+    </Panel>
+  </Panel>
+</root>

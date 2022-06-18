@@ -1,5 +1,8 @@
 -- Generated from template
 
+RadiantTeam = 2
+DireTeam = 3
+
 if GemGrab == nil then
   GemGrab = class({})
 end
@@ -22,8 +25,9 @@ end
 
 
 function GemGrab:Init()
-  GemGrab.RadiantScore = 0
-  GemGrab.DireScore = 0
+  GemGrab.Score = {}
+  GemGrab.Score[RadiantTeam] = 0
+  GemGrab.Score[DireTeam] = 0
 
   GameRules:SetCustomGameTeamMaxPlayers(2, 3)
   GameRules:SetCustomGameTeamMaxPlayers(3, 3)
@@ -58,20 +62,10 @@ function GemGrab:OnItemPickedUp(event)
     local team = player:GetTeam()
     local charges = item:GetCurrentCharges()
 
-    if (team == 2) then
-      GemGrab.RadiantScore = GemGrab.RadiantScore + charges
-
-      if GemGrab.RadiantScore >= 10 then
-        GameRules:SetGameWinner(2)
-      end
-    end
-
-    if (team == 3) then
-      GemGrab.DireScore = GemGrab.DireScore + charges
-
-      if GemGrab.DireScore >= 10 then
-        GameRules:SetGameWinner(3)
-      end
+    GemGrab.Score[team] = GemGrab.Score[team] + charges
+    CustomGameEventManager:Send_ServerToAllClients("score_updated", { teamNum = team, newScore = GemGrab.Score[team] })
+    if GemGrab.Score[team] >= 10 then
+      GameRules:SetGameWinner(team)
     end
   end
 end
@@ -84,13 +78,8 @@ function GemGrab:OnItemDropped(event)
       local team = hero:GetTeam()
       local charges = item:GetCurrentCharges()
 
-      if (team == 2) then
-        GemGrab.RadiantScore = GemGrab.RadiantScore - charges
-      end
-
-      if (team == 3) then
-        GemGrab.DireScore = GemGrab.DireScore - charges
-      end
+      GemGrab.Score[team] = GemGrab.Score[team] - charges
+      CustomGameEventManager:Send_ServerToAllClients("score_updated", { teamNum = team, newScore = GemGrab.Score[team] })
     end
   end
 end
