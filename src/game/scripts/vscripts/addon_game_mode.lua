@@ -2,6 +2,8 @@
 
 RadiantTeam = 2
 DireTeam = 3
+WIN_GEM_COUNT = 10
+WIN_COUNTDOWN = 15
 
 if GemGrab == nil then
   GemGrab = class({})
@@ -52,6 +54,7 @@ end
 function GemGrab:OnGameStateChanged()
   if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
     GameRules:GetGameModeEntity():SetThink(SpawnGem, self, "GemSpawnThink", 10)
+    GameRules:GetGameModeEntity():SetThink(CheckWin, self, "CheckWinThink", 1)
   end
 end
 
@@ -64,9 +67,6 @@ function GemGrab:OnItemPickedUp(event)
 
     GemGrab.Score[team] = GemGrab.Score[team] + charges
     CustomGameEventManager:Send_ServerToAllClients("score_updated", { teamNum = team, newScore = GemGrab.Score[team] })
-    if GemGrab.Score[team] >= 10 then
-      GameRules:SetGameWinner(team)
-    end
   end
 end
 
@@ -82,6 +82,40 @@ function GemGrab:OnItemDropped(event)
       CustomGameEventManager:Send_ServerToAllClients("score_updated", { teamNum = team, newScore = GemGrab.Score[team] })
     end
   end
+end
+
+function GemGrab:CalculateWinner()
+  if GemGrab.Score[RadiantTeam] >= WIN_GEM_COUNT or GemGrab.Score[DireTeam] >= WIN_GEM_COUNT then
+    if GemGrab.Score[RadiantTeam] > GemGrab.Score[DireTeam] then
+      return RadiantTeam
+    elseif GemGrab.Score[DireTeam] > GemGrab.Score[RadiantTeam] then
+      return DireTeam
+    else
+      return nil
+    end
+  end
+end
+
+function CheckWin()
+  local newWinner = GemGrab:CalculateWinner()
+  
+  if newWinner == nil then
+    GemGrab.CurrentWinner = nil
+    return 1
+  end
+
+  if GemGrab.CurrentWinner ~= newWinner then
+    GemGrab.CurrentWinner = newWinner
+    GemGrab.WinTime = GameRules:GetGameTime() + WIN_COUNTDOWN
+    return 1
+  end
+
+  if GameRules:GetGameTime() >= GemGrab.WinTime then
+    GameRules:SetGameWinner(newWinner)
+    return nil
+  end
+
+  return 1
 end
 
 function SpawnGem()
