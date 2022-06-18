@@ -9,12 +9,12 @@
   
 
   <Panel id="Score" class="Score">
-    <Panel id="Team2" class="RadiantScore">
-      <Label id="Label2" text = "0"/>
+    <Panel id="Team2" >
+      <Label id="Label2" class="RadiantScore" text = "0"/>
     </Panel>
 
-    <Panel id="Team3" class="DireScore">
-      <Label id="Label3" text = "0"/>
+    <Panel id="Team3">
+      <Label id="Label3" class="DireScore" text = "0"/>
     </Panel>
   </Panel>
 </root>
