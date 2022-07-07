@@ -1,0 +1,14 @@
+"DOTAAbilities"
+{
+	"mana_system"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"mana_system"
+		"AbilityTextureName"  "mana_system"
+		"FightRecapLevel"		  "1"
+		"MaxLevel"						"1"
+		
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+}
