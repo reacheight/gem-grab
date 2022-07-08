@@ -1,7 +1,7 @@
 import { BaseModifier, registerModifier } from "./lib/dota_ts_adapter"
 
 @registerModifier()
-export class modifier_mana_system extends BaseModifier {
+export class modifier_mana_on_attack extends BaseModifier {
   IsHidden() {
     return true;
   }

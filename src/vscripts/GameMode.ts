@@ -1,6 +1,6 @@
 import { BaseItem } from "./lib/dota_ts_adapter"
 import { reloadable } from "./lib/tstl-utils"
-import { modifier_mana_system } from "./modifier_mana_system"
+import { modifier_mana_on_attack } from "./modifier_mana_on_attack"
 
 declare global {
     interface CDOTAGameRules {
@@ -69,7 +69,7 @@ export class GemGrab {
 
     public OnNPCSpawned(event: NpcSpawnedEvent) {
         let hero = EntIndexToHScript(event.entindex) as CDOTA_BaseNPC_Hero
-        hero.AddNewModifier(hero, undefined, modifier_mana_system.name, undefined)
+        hero.AddNewModifier(hero, undefined, modifier_mana_on_attack.name, undefined)
     }
 
     public OnItemPickedUp(event: DotaItemPickedUpEvent): void {

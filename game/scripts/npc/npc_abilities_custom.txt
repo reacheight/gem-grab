@@ -1,10 +1,10 @@
 "DOTAAbilities"
 {
-	"mana_system"
+	"mana_on_attack"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"mana_system"
-		"AbilityTextureName"  "mana_system"
+		"ScriptFile"					"mana_on_attack"
+		"AbilityTextureName"  "mana_on_attack"
 		"FightRecapLevel"		  "1"
 		"MaxLevel"						"1"
 		
