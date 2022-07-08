@@ -1,5 +1,6 @@
 import { BaseItem } from "./lib/dota_ts_adapter"
 import { reloadable } from "./lib/tstl-utils"
+import { modifier_extra_mana } from "./modifier_extra_mana"
 import { modifier_mana_on_attack } from "./modifier_mana_on_attack"
 
 declare global {
@@ -69,7 +70,22 @@ export class GemGrab {
 
     public OnNPCSpawned(event: NpcSpawnedEvent) {
         let hero = EntIndexToHScript(event.entindex) as CDOTA_BaseNPC_Hero
+        if (!hero.IsHero()) return
+
         hero.AddNewModifier(hero, undefined, modifier_mana_on_attack.name, undefined)
+        hero.AddNewModifier(hero, undefined, modifier_extra_mana.name, undefined)
+        
+        let baseInt = hero.GetBaseIntellect()
+        Timers.CreateTimer(0.01, () => {
+            hero.SetBaseIntellect(0)
+            if (hero.GetPrimaryAttribute() == Attributes.INTELLECT) {
+                hero.SetBaseDamageMin(hero.GetBaseDamageMin() + baseInt)
+                hero.SetBaseDamageMax(hero.GetBaseDamageMax() + baseInt)
+            }
+
+            hero.SetMana(0)
+            hero.SetMaxMana(0)
+        })
     }
 
     public OnItemPickedUp(event: DotaItemPickedUpEvent): void {
