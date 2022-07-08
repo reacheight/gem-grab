@@ -1,8 +1,0 @@
-"DOTAHeroes"
-{
-  "npc_dota_hero_lina_lua"
-  {
-    "override_hero"	"npc_dota_hero_lina"
-    "Ability1"			"mana_system"
-  }  
-}

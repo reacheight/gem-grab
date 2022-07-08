@@ -1,5 +1,6 @@
 import { BaseItem } from "./lib/dota_ts_adapter"
 import { reloadable } from "./lib/tstl-utils"
+import { modifier_mana_system } from "./modifier_mana_system"
 
 declare global {
     interface CDOTAGameRules {
@@ -34,6 +35,7 @@ export class GemGrab {
         ListenToGameEvent("game_rules_state_change", () => this.OnStateChange(), undefined)
         ListenToGameEvent("dota_item_picked_up", event => this.OnItemPickedUp(event), undefined)
         ListenToGameEvent("dota_hero_inventory_item_change", event => this.OnItemDropped(event), undefined)
+        ListenToGameEvent("npc_spawned", event => this.OnNPCSpawned(event), undefined)
     }
 
     private configure(): void {
@@ -63,6 +65,11 @@ export class GemGrab {
             Timers.CreateTimer(this.GEM_SPAWN_PERIOD, () => this.SpawnGem())
             Timers.CreateTimer(() => this.CheckWin())
         }
+    }
+
+    public OnNPCSpawned(event: NpcSpawnedEvent) {
+        let hero = EntIndexToHScript(event.entindex) as CDOTA_BaseNPC_Hero
+        hero.AddNewModifier(hero, undefined, modifier_mana_system.name, undefined)
     }
 
     public OnItemPickedUp(event: DotaItemPickedUpEvent): void {
