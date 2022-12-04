@@ -89,6 +89,7 @@ export class GemGrab {
 
             hero.SetMana(0)
             hero.SetMaxMana(300)
+            hero.SetBaseManaRegen(0)
         })
     }
 
